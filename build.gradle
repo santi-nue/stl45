@@ -1,7 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    version = file("../../VERSION.txt").text.trim()
+    version = '14.0.2'
 
     repositories {
         google()
