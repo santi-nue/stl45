@@ -10,9 +10,14 @@ buildscript {
         maven { url "https://jitpack.io" }
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
-        classpath "com.chaquo.python:gradle:14.0.2"
+        
+    
+        classpath 'com.android.tools.build:gradle:7.0.3'
+        classpath 'com.chaquo.python:gradle:12.0.0' // Chaquopy plugin
+  
 
+
+       
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -28,3 +33,47 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+
+
+
+
+Certainly! Below is a simple example of an Android app that uses *Chaquopy* to integrate Python code within an Android project. The app will use Python to perform a basic calculation (e.g., adding two numbers) and display the result in the Android UI.
+
+Additionally, I will also provide a *GitHub Action* to automate the process of building the Android app with Chaquopy.
+
+Step 1: Create a Simple Android App Using Chaquopy
+
+1.1 *Create the Android Project*
+First, create a new Android project in *Android Studio* and choose an empty activity.
+
+1.2 *Modify `build.gradle` Files*
+
+Project-level `build.gradle`:
+In your project-level `build.gradle`, add the following repository and plugin:
+
+```gradle
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.0.3'
+        classpath 'com.chaquo.python:gradle:12.0.0' // Chaquopy plugin
+    }
+}
+```
+
+App-level `build.gradle`:
+In your app-level `build.gradle`, apply the Chaquopy plugin and add dependencies for Chaquopy:
+
+```gradle
+apply plugin: 'com.android.application'
+apply plugin: 'com.chaquo.python'
+
+android {
+    compileSdkVersion 30
+    defaultConfig {
+        applicationId "com.example.chaquopydemo"
+        minSdkVersion 21
