@@ -10,11 +10,13 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
+  
     permissions:
+      actions: read
       contents: read
-
+      security-events: write
     steps:
       - uses: actions/checkout@v4
       - uses: gradle/wrapper-validation-action@v2
@@ -22,9 +24,9 @@ jobs:
       - name: set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: 20
+          java-version: 17
           distribution: "temurin"
-          cache: 'gradle'
+          
 
       - name: Build debug APK and run jvm tests
         run: ./gradlew build --stacktrace
