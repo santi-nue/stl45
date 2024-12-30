@@ -12,29 +12,27 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+      - uses: actions/checkout@v4
+      - uses: gradle/wrapper-validation-action@v2
 
-    - name: Set up JDK 
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'zulu' 
+      - name: set up JDK
+        uses: actions/setup-java@v4
+        with:
+          java-version: 21
+          distribution: "temurin"
+          cache: 'gradle'
 
-    - name: Install dependencies
-      run: |
-        sudo apt update
-        sudo apt install -y wget
-        wget https://services.gradle.org/distributions/gradle-7.0.2-bin.zip
-        sudo unzip gradle-7.0.2-bin.zip -d /opt
-        sudo ln -s /opt/gradle-7.0.2/bin/gradle /usr/local/bin/gradle
+      - name: Build debug APK and run jvm tests
+        run: ./gradlew build --stacktrace
 
-    - name: Build with Gradle
-      run: ./gradlew build --stacktrace
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: app
+          path: app/build/outputs/apk/debug/*.apk
 
-    - name: Upload APK
-      uses: actions/upload-artifact@v3
-      with:
-        name: app-apk
-        path: app/build/outputs/apk/debug/app-debug.apk
+  
